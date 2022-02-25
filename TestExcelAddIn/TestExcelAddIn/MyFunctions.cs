@@ -25,65 +25,25 @@ namespace TestExcelAddin
 
 
         [ExcelFunction(Description = "My first .NET functions", Category = "ASYNC")]
-        public static object AsyncExample()
+        public static async Task<string> AsyncExample(string uri)
         {
-            Task<string> s = (Task<string>)ExcelDna.Integration.ExcelAsyncUtil.Run("AsyncExample", null, delegate { return Test(); });
-            
-            return s.Result;
-        }
-
-        static string Test()
-        {
-            using (HttpClient client = new HttpClient())
+            client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue(@"application/json"));        // give us json back
+            try
             {
-                client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue(@"application/json"));        // give us json back
-
-                try
+                using (HttpResponseMessage response = await client.GetAsync(uri))
                 {
-                    using (HttpResponseMessage response = client.GetAsync(@"https://catfact.ninja/fact").Result)
+                    if (response.IsSuccessStatusCode)
                     {
-                        if (response.IsSuccessStatusCode)
-                        {
-                            string retString = response.Content.ReadAsStringAsync().Result;
-                            return retString;
-                        }
+                        string retString = await response.Content.ReadAsStringAsync();
+                        return retString;
                     }
                 }
-                catch (Exception e)
-                {
-                    string message = e.Message;
-                }
-
-
+            }
+            catch (Exception e)
+            {
+                string message = e.Message;
             }
             return "darn";
-
-
-
-
-
-
-
-
-            /*using (HttpClient client = new HttpClient())
-            {
-                //client.BaseAddress = new Uri("https://us-zipcode.api.smartystreets.com/");
-                //client.DefaultRequestHeaders.Accept.Clear();                                                            // clear headers just in case
-                client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue(@"application/json"));        // give us json back
-
-                //string function = "lookup?auth-id=ac7da12c-520e-2dd4-4365-d5f6346b9a23&auth-token=uIKoOq3LwLDY9E7pilsE";
-
-                try
-                {
-                    //HttpResponseMessage response = await client.PostAsJsonAsync(@"https://us-zipcode.api.smartystreets.com/lookup?auth-id=ac7da12c-520e-2dd4-4365-d5f6346b9a23&auth-token=uIKoOq3LwLDY9E7pilsE", new { city = "Raleigh", state = "NC" });
-                    HttpResponseMessage response = await client.GetAsync(@"https://catfact.ninja/fact");
-                }
-                catch (Exception e)
-                {
-                    string mes = e.Message;
-                }
-                return 3;
-            }*/
         }
     }
 }

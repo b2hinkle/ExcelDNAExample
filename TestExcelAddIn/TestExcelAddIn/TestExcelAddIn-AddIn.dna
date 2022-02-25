@@ -1,7 +1,14 @@
 <?xml version="1.0" encoding="utf-8"?>
 <DnaLibrary Name="TestExcelAddIn Add-In" RuntimeVersion="v4.0" xmlns="http://schemas.excel-dna.net/addin/2020/07/dnalibrary">
-  <ExternalLibrary Path="TestExcelAddIn.dll" ExplicitExports="false" LoadFromBytes="true" Pack="true" IncludePdb="false" />
+  
+  <!-- Note that we've added ExplicitRegistration="true" here - this means Excel-DNA won't automatically process the assembly and register.
+  In our AutoOpen we can then pre-process functions (e.g. to generate the IObservable wrappers) and then register the functions ourselves. -->
+  <ExternalLibrary Path="TestExcelAddIn.dll" ExplicitExports="false" ExplicitRegistration="true" LoadFromBytes="true" Pack="true" IncludePdb="false" />
+  
 
+  
+  
+  
   <!--
        The RuntimeVersion attribute above allows only the following setting:
        * RuntimeVersion="v4.0" - for .NET 4.5 or higher
@@ -21,8 +28,6 @@
   -->
 
 
-  
-  
   <CustomUI>
     <customUI xmlns='http://schemas.microsoft.com/office/2009/07/customui' onLoad="OnLoad">
       <ribbon>
