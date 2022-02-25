@@ -13,8 +13,6 @@ namespace TestExcelAddin
 {
     public static class MyFunctions
     {
-        private static readonly HttpClient client = new HttpClient();
-
         [ExcelFunction(Description = "My first .NET functions", Category = "Category A")]
         public static string SayHello ( [ExcelArgument(Description = "The name to say hi to")] string name)
         {
@@ -27,6 +25,7 @@ namespace TestExcelAddin
         [ExcelFunction(Description = "My first .NET functions", Category = "ASYNC")]
         public static async Task<string> AsyncExample(string uri)
         {
+            HttpClient client = new HttpClient();
             client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue(@"application/json"));        // give us json back
             try
             {

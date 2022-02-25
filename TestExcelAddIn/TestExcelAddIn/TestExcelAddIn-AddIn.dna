@@ -34,7 +34,7 @@
         <tabs>
           <tab id='tab1' label='My Tab'>
             <group id='group1' label='My Group'>
-              <button id='button1' label='Say Hello' onAction='OnSayHelloPressed'/>
+              <button id='button1' label='Test Ribbon Button' onAction='OnTestRibbonButtonPressed'/>
             </group>
           </tab>
         </tabs>

@@ -6,6 +6,7 @@ using ExcelDna.Integration.CustomUI;
 using Microsoft.Office.Interop.Excel;
 using System.Net.Http;
 using System.Net.Http.Headers;
+using System.Threading.Tasks;
 
 namespace TestExcelAddin
 {
@@ -61,20 +62,25 @@ namespace TestExcelAddin
 
 
 
-
-        public void OnSayHelloPressed(IRibbonControl control)
+        /* Async ribbon press events can have the same signature as the normal excel async function, just without the static. Also you can return specific kind of task, but won't be a case where you do that since it's just a button being pressed. */
+        public async Task OnTestRibbonButtonPressed(IRibbonControl control)
         {
-            using (HttpClient client = new HttpClient())
+            HttpClient client = new HttpClient();
+            client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue(@"application/json"));        // give us json back
+            try
             {
-                client.BaseAddress = new Uri("https://us-zipcode.api.smartystreets.com/");
-                client.DefaultRequestHeaders.Accept.Clear();                                                            // clear headers just in case
-                client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue(@"application/json"));      // just give us json back
-
-                string function = "lookup?auth-id=ac7da12c-520e-2dd4-4365-d5f6346b9a23&auth-token=uIKoOq3LwLDY9E7pilsE";
-
-                //HttpResponseMessage response = await client.PostAsync(function, new { city = "Raleigh", state = "NC" });
+                using (HttpResponseMessage response = await client.GetAsync(@"https://api.publicapis.org/entries"))
+                {
+                    if (response.IsSuccessStatusCode)
+                    {
+                        string retString = await response.Content.ReadAsStringAsync();
+                    }
+                }
             }
-            return;
+            catch (Exception e)
+            {
+                string message = e.Message;
+            }
         }
     }
 }
