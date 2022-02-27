@@ -7,6 +7,7 @@ using System.Threading.Tasks;
 using ExcelDna.Integration;
 using ExcelDna.IntelliSense;
 using ExcelDna.Registration;
+using Microsoft.Office.Interop.Excel;
 
 namespace TestExcelAddIn
 {
@@ -25,6 +26,14 @@ namespace TestExcelAddIn
 
 
             IntelliSenseServer.Install();
+
+#if DEBUG
+            Application _excel = (Application)ExcelDna.Integration.ExcelDnaUtil.Application;
+            if (_excel.ActiveWorkbook == null)
+            {
+                _excel.Workbooks.Add();      // Just useful for quick testing
+            }
+#endif
         }
         public void AutoClose()
         {

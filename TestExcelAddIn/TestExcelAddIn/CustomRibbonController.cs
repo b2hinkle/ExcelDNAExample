@@ -37,11 +37,6 @@ namespace TestExcelAddin
             _excel.WorkbookDeactivate += OnInvalidateRibbon;
             _excel.SheetActivate += OnInvalidateRibbon;
             _excel.SheetDeactivate += OnInvalidateRibbon;
-
-            if (_excel.ActiveWorkbook == null)      // Just useful for quick testing. Should be commented out in prod use
-            {
-                _excel.Workbooks.Add();
-            }
         }
 
         private void OnInvalidateRibbon(object obj)
