@@ -109,7 +109,7 @@ namespace ExcelDNATests
         }
         public void OnWriteToSpecificCellsPressed(IRibbonControl control)
         {
-            // Accessing specific cells
+            // Writing to specific cells
             Worksheet activeSheet = (Worksheet)excelApp.ActiveSheet;
 
             object startSelection = activeSheet.Cells[1, 1];
