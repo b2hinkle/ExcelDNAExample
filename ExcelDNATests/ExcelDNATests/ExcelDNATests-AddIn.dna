@@ -16,6 +16,7 @@
               <button id='button1' label='APIAuthPostCall' onAction='OnAPIAuthPostCallPressed' image='MagicWand'/>
               <button id='button2' label='WriteToSelectedCell' onAction='OnWriteToSelectedCellPressed' image='MagicWand'/>
               <button id='button3' label='WriteToSpecificCell' onAction='OnWriteToSpecificCellPressed' image='MagicWand'/>
+              <button id='button4' label='WriteToSpecificCells' onAction='OnWriteToSpecificCellsPressed' image='MagicWand'/>
             </group>
           </tab>
         </tabs>

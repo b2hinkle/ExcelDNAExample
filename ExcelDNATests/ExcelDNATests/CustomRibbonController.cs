@@ -94,15 +94,30 @@ namespace ExcelDNATests
 
         public void OnWriteToSelectedCellPressed(IRibbonControl control)
         {
-            excelApp.ActiveCell.Value2 = "written";
+            Range rangeToWriteTo = excelApp.ActiveCell;
+
+            rangeToWriteTo.Value2 = "written";
         }
 
         public void OnWriteToSpecificCellPressed(IRibbonControl control)
         {
-            // Accessing a cell
+            // Accessing specific cell
             Worksheet activeSheet = (Worksheet)excelApp.ActiveSheet;
             Range rangeToWriteTo = activeSheet.Cells[1, 1];
-            rangeToWriteTo.Value2 = "ayo";
+
+            rangeToWriteTo.Value2 = "written";
+        }
+        public void OnWriteToSpecificCellsPressed(IRibbonControl control)
+        {
+            // Accessing specific cells
+            Worksheet activeSheet = (Worksheet)excelApp.ActiveSheet;
+
+            object startSelection = activeSheet.Cells[1, 1];
+            object endSelection = activeSheet.Cells[20, 50];
+            Range rangeToWriteTo = activeSheet.Range[startSelection, endSelection];
+
+
+            rangeToWriteTo.Value2 = "written";
         }
     }
 }
