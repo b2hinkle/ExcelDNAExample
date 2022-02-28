@@ -56,7 +56,13 @@ namespace ExcelDNATests
 
 
 
-        /* Async ribbon press events can have the same signature as the normal excel async function, just without the static. Also you can return specific kind of task, but won't be a case where you do that since it's just a button being pressed. */
+        /* 
+         *   Async ribbon press events can have the same signature as the normal excel async function, just without the static. Also you can return specific kind of task, but won't be a case where you do that since it's just a button being pressed. 
+         *   
+         *   Also it seams like we shouoldn't be accessing COM objects on a different thread, but it seams to be working flawlessly rn. I will leave how to queue logic for the main thread here (below) just in case we end up doing it.
+         *   "Transitioning to the main thread (or a macro context) from another thread. Excel-DNA has a helper method ExcelAsyncUtil.QueueAsMacro that can be called from another thread or a timer event, to transition to a context where the object model can be reliably used."
+         */
+
         public async Task OnAPIAuthPostCallPressed(IRibbonControl control)
         {
             HttpClient client = new HttpClient();
@@ -74,7 +80,7 @@ namespace ExcelDNATests
             byte[] authToken = Encoding.ASCII.GetBytes($"{userName}:{password}");
             client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Basic", Convert.ToBase64String(authToken));
 #endif
-
+            string responseString;
             try
             {
                 HttpRequestMessage req = new HttpRequestMessage(HttpMethod.Post, url);
@@ -82,13 +88,13 @@ namespace ExcelDNATests
                 {
                     if (response.IsSuccessStatusCode)
                     {
-                        string retString = await response.Content.ReadAsStringAsync();
+                        responseString = await response.Content.ReadAsStringAsync();
                     }
                 }
             }
             catch (Exception e)
             {
-                string message = e.Message;
+                responseString = "darn";
             }
         }
 
