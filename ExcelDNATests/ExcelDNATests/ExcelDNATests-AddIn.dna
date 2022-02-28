@@ -12,12 +12,17 @@
       <ribbon>
         <tabs>
           <tab id='tab1' label='My Tab'>
-            <group id='group1' label='My Group'>
-              
-              <button id='button1' label='APIAuthPostCall' onAction='OnAPIAuthPostCallPressed' image='MagicWand'/>
-              <button id='button2' label='WriteToSelectedCell' onAction='OnWriteToSelectedCellPressed' image='MagicWand'/>
-              <button id='button3' label='WriteToSpecificCell' onAction='OnWriteToSpecificCellPressed' image='MagicWand'/>
-              <button id='button4' label='WriteToSpecificCells' onAction='OnWriteToSpecificCellsPressed' image='MagicWand'/>
+            <group id='testGroup' label='Write to...'>
+                <button id='writeToSelectedCellBtn' label='SelectedCell' onAction='OnWriteToSelectedCellPressed' image='MagicWand'/>
+                <button id='writeToSpecificCellBtn' label='SpecificCell' onAction='OnWriteToSpecificCellPressed' image='MagicWand'/>
+                <button id='writeToSpecificCellsBtn' label='SpecificCells' onAction='OnWriteToSpecificCellsPressed' image='MagicWand'/>
+            </group>
+
+            <group id='apiCallGroup' label='Api Authentication Call'>
+              <editBox id='userIdEditBox'               label='User Id'          onChange="OnUserIdEditBoxChange"/>
+              <editBox id='authTokenEditBox'            label='Auth Token'       onChange="OnAuthTokenEditBoxChange"/>
+              <editBox id='zipcodeEditBox'              label='Zipcode'          onChange="OnZipcodeEditBoxChange"/>
+              <button id='apiAuthPostCallBtn' label='APIAuthPostCall' onAction='OnAPIAuthPostCallPressed' image='MagicWand'/>
             </group>
           </tab>
         </tabs>
