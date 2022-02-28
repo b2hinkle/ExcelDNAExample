@@ -109,8 +109,10 @@ namespace ExcelDNATests
         public void OnWriteToSpecificCellPressed(IRibbonControl control)
         {
             // Not sure this is a solid way to access cells or not but seamed to work
-            Range rangeToWriteTo = (Range)excelApp.ActiveSheet.Cells[1, 2];
+            Worksheet activeSheet = (Worksheet)excelApp.ActiveSheet;
+            Range rangeToWriteTo = activeSheet.Cells[1, 1];
             rangeToWriteTo.Value2 = "ayo";
+            
         }
     }
 }
