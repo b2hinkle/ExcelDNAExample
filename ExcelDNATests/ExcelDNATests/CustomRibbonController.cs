@@ -114,12 +114,7 @@ namespace ExcelDNATests
 
             }
 
-            ExcelAsyncUtil.QueueAsMacro(WriteDataToExcel);    // Async functions must use   ExcelAsyncUtil.QueueAsMacro(() => { })   when doing operations on Excel
-        }
-
-        public void WriteDataToExcel()
-        {
-
+            ExcelAsyncUtil.QueueAsMacro( () => { excelApp.ActiveCell.Value2 = responseString; });    // Async functions must use   ExcelAsyncUtil.QueueAsMacro(() => { })   when doing operations on Excel
         }
 
         public void OnWriteToSelectedCellPressed(IRibbonControl control)
