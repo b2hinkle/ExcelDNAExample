@@ -99,21 +99,35 @@ namespace ExcelDNATests
             rangeToWriteTo.Value2 = "written";
         }
 
+        // Accessing specific cell
         public void OnWriteToSpecificCellPressed(IRibbonControl control)
         {
-            // Accessing specific cell
+            
             Worksheet activeSheet = (Worksheet)excelApp.ActiveSheet;
-            Range rangeToWriteTo = activeSheet.Cells[1, 1];
+            Range rangeToWriteTo = activeSheet.Range["A1"];
+#if false
+            Range rangeToWriteTo = activeSheet.Cells[1, 1];         // Alternative way
+#endif
 
             rangeToWriteTo.Value2 = "written";
+
+
+
+
         }
+        // Writing to specific cells
         public void OnWriteToSpecificCellsPressed(IRibbonControl control)
         {
-            // Writing to specific cells
             Worksheet activeSheet = (Worksheet)excelApp.ActiveSheet;
 
-            object startSelection = activeSheet.Cells[1, 1];
+            object startSelection = activeSheet.Range["B2"];
+            object endSelection = activeSheet.Range["AX20"];        // Excel uses patern (A,B,C .... AA,AB,AC, .... BA,BB,BC). In this case AX is the 50th collumn
+#if false
+            // Alternative way.....
+            object startSelection = activeSheet.Cells[2, 2];
             object endSelection = activeSheet.Cells[20, 50];
+#endif
+
             Range rangeToWriteTo = activeSheet.Range[startSelection, endSelection];
 
 

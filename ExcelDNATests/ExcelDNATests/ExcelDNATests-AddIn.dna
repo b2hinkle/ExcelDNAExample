@@ -13,6 +13,7 @@
         <tabs>
           <tab id='tab1' label='My Tab'>
             <group id='group1' label='My Group'>
+              
               <button id='button1' label='APIAuthPostCall' onAction='OnAPIAuthPostCallPressed' image='MagicWand'/>
               <button id='button2' label='WriteToSelectedCell' onAction='OnWriteToSelectedCellPressed' image='MagicWand'/>
               <button id='button3' label='WriteToSpecificCell' onAction='OnWriteToSpecificCellPressed' image='MagicWand'/>
