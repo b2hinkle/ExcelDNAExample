@@ -73,7 +73,7 @@ namespace ExcelDNATests
 
         /* 
          *  Async ribbon press events can have the same signature as the normal excel async function, just without the static. Also you can return specific kind of task, but won't be a case where you do that since it's just a button being pressed. 
-         *  Only caveat with async functions is that they must transition to the main thread in order to interact with Excel. Just use ExcelAsyncUtil.QueueAsMacro(() => { }) for that 
+         *  Only caveat with async functions is that they must transition to the main thread when doing operations on Excel. Just use ExcelAsyncUtil.QueueAsMacro(() => { }) for that 
          */
 
         public async Task OnAPIAuthPostCallPressed(IRibbonControl control)
@@ -114,9 +114,7 @@ namespace ExcelDNATests
 
             }
 
-            ExcelAsyncUtil.QueueAsMacro(() => { excelApp.ActiveCell.Value2 = responseString; });    // Async functions must use   ExcelAsyncUtil.QueueAsMacro(() => { })   when interacting with Excel
-
-
+            ExcelAsyncUtil.QueueAsMacro(() => { excelApp.ActiveCell.Value2 = responseString; });    // Async functions must use   ExcelAsyncUtil.QueueAsMacro(() => { })   when doing operations on Excel
         }
 
         public void OnWriteToSelectedCellPressed(IRibbonControl control)
