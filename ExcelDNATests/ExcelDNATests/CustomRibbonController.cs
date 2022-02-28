@@ -112,7 +112,6 @@ namespace ExcelDNATests
             Worksheet activeSheet = (Worksheet)excelApp.ActiveSheet;
             Range rangeToWriteTo = activeSheet.Cells[1, 1];
             rangeToWriteTo.Value2 = "ayo";
-            
         }
     }
 }
