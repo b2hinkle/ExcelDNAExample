@@ -12,12 +12,16 @@
       <ribbon>
         <tabs>
           <tab id='tab1' label='My Tab'>
-            <group id='group1' label='My Group'>
-              
-              <button id='button1' label='APIAuthPostCall' onAction='OnAPIAuthPostCallPressed' image='MagicWand'/>
-              <button id='button2' label='WriteToSelectedCell' onAction='OnWriteToSelectedCellPressed' image='MagicWand'/>
-              <button id='button3' label='WriteToSpecificCell' onAction='OnWriteToSpecificCellPressed' image='MagicWand'/>
-              <button id='button4' label='WriteToSpecificCells' onAction='OnWriteToSpecificCellsPressed' image='MagicWand'/>
+            <group id='testGroup' label='Test Group'>
+                <button id='writeToSelectedCellBtn' label='WriteToSelectedCell' onAction='OnWriteToSelectedCellPressed' image='MagicWand'/>
+                <button id='writeToSpecificCellBtn' label='WriteToSpecificCell' onAction='OnWriteToSpecificCellPressed' image='MagicWand'/>
+                <button id='writeToSpecificCellsBtn' label='WriteToSpecificCells' onAction='OnWriteToSpecificCellsPressed' image='MagicWand'/>
+            </group>
+
+            <group id='apiCallGroup' label='api call group'>
+              <editBox id='userIdEditBox'/>
+              <editBox id='authenticationTokenEditBox'/>
+              <button id='apiAuthPostCallBtn' label='APIAuthPostCall' onAction='OnAPIAuthPostCallPressed' image='MagicWand'/>
             </group>
           </tab>
         </tabs>
