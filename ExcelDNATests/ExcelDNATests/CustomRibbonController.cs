@@ -19,6 +19,7 @@ namespace ExcelDNATests
         
         string userId    = "";
         string authToken = "";
+        string zipcode   = "";
 
         public CustomRibbonController()
         {
@@ -54,6 +55,10 @@ namespace ExcelDNATests
         {
             authToken = newText;
         }
+        public void OnZipcodeEditBoxChange(IRibbonControl control, string newText)
+        {
+            zipcode = newText;
+        }
 
 
 
@@ -77,11 +82,10 @@ namespace ExcelDNATests
             client.DefaultRequestHeaders.Accept.Clear();
             client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue(@"application/json"));        // give us json back
 
-            string userName = userId;       // ac7da12c-520e-2dd4-4365-d5f6346b9a23
-            string password = authToken;    // uIKoOq3LwLDY9E7pilsE
-            string city = "Raleigh";
-            string state = "Nc";
-            string url = $"https://us-zipcode.api.smartystreets.com/lookup?auth-id={userName}&auth-token={password}&city={city}&state={state}";     // No body is used for this post req. Query params instead
+            string req_userName = userId;       // ac7da12c-520e-2dd4-4365-d5f6346b9a23
+            string req_password = authToken;    // uIKoOq3LwLDY9E7pilsE
+            string req_zipcode = zipcode;
+            string url = $"https://us-zipcode.api.smartystreets.com/lookup?auth-id={req_userName}&auth-token={req_password}&zipcode={req_zipcode}";     // No body is used for this post req. Query params instead
 
 #if false
             // An endpoint may require the username and password to be in the header (instead of the url). In that case put it in the Authorization header
