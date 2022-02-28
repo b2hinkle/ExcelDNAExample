@@ -70,6 +70,15 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
+    <None Include="customUI.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="customui14.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="ExcelDna.DnaLibrary.xsd">
+      <SubType>Designer</SubType>
+    </None>
     <None Include="ExcelDNATests-AddIn.dna" />
     <None Include="packages.config" />
     <None Include="Properties\ExcelDna.Build.props" />
