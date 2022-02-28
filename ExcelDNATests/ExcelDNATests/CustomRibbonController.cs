@@ -14,12 +14,12 @@ namespace ExcelDNATests
     [ComVisible(true)]
     public class CustomRibbonController : ExcelRibbon
     {
-        private Application _excel;
-        private IRibbonUI _thisRibbon;
+        private Application excelApp;
+        private IRibbonUI thisRibbon;
 
         public CustomRibbonController()
         {
-            _excel = (Application)ExcelDna.Integration.ExcelDnaUtil.Application;
+            excelApp = (Application)ExcelDna.Integration.ExcelDnaUtil.Application;
         }
 
         public void OnLoad(IRibbonUI ribbon)
@@ -29,17 +29,17 @@ namespace ExcelDNATests
                 throw new ArgumentNullException(nameof(ribbon));
             }
 
-            _thisRibbon = ribbon;
+            thisRibbon = ribbon;
 
-            _excel.WorkbookActivate += OnInvalidateRibbon;
-            _excel.WorkbookDeactivate += OnInvalidateRibbon;
-            _excel.SheetActivate += OnInvalidateRibbon;
-            _excel.SheetDeactivate += OnInvalidateRibbon;
+            excelApp.WorkbookActivate += OnInvalidateRibbon;
+            excelApp.WorkbookDeactivate += OnInvalidateRibbon;
+            excelApp.SheetActivate += OnInvalidateRibbon;
+            excelApp.SheetDeactivate += OnInvalidateRibbon;
         }
 
         private void OnInvalidateRibbon(object obj)
         {
-            _thisRibbon.Invalidate();
+            thisRibbon.Invalidate();
         }
 
 
@@ -57,27 +57,9 @@ namespace ExcelDNATests
 
 
         /* Async ribbon press events can have the same signature as the normal excel async function, just without the static. Also you can return specific kind of task, but won't be a case where you do that since it's just a button being pressed. */
-        public async Task OnTestRibbonButtonPressed(IRibbonControl control)
+        public async Task OnAPIAuthPostCallPressed(IRibbonControl control)
         {
-            if (_excel == null)
-            {
-                return;
-            }
-            if (_excel.ActiveCell == null)
-            {
-                return;
-            }
-
-            _excel.ActiveCell.Value2 = "yuoo";
-
-
-            /* 
-+             // Not sure this is a solid way to access cells or not but seamed to work
-+             Range rangeToWriteTo = (Range)_excel.ActiveSheet.Cells[1, 2];
-+             rangeToWriteTo.Value2 = "ayo";
-+            */
-
-            /*HttpClient client = new HttpClient();
+            HttpClient client = new HttpClient();
             client.DefaultRequestHeaders.Accept.Clear();
             client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue(@"application/json"));        // give us json back
 
@@ -107,7 +89,28 @@ namespace ExcelDNATests
             catch (Exception e)
             {
                 string message = e.Message;
-            }*/
+            }
+        }
+
+        public void OnWriteToSelectedCellPressed(IRibbonControl control)
+        {
+            if (excelApp == null)
+            {
+                return;
+            }
+            if (excelApp.ActiveCell == null)
+            {
+                return;
+            }
+
+            excelApp.ActiveCell.Value2 = "written";
+        }
+
+        public void OnWriteToSpecificCellPressed(IRibbonControl control)
+        {
+            // Not sure this is a solid way to access cells or not but seamed to work
+            Range rangeToWriteTo = (Range)excelApp.ActiveSheet.Cells[1, 2];
+            rangeToWriteTo.Value2 = "ayo";
         }
     }
 }
