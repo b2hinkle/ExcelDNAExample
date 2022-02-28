@@ -12,7 +12,7 @@ namespace ExcelDNATests
 {
     public static class Functions
     {
-        [ExcelFunction(Description = "My first .NET functions", Category = "Category A")]
+        [ExcelFunction(Description = "Custom cell functions", Category = "Custom cell Functions")]
         public static string SayHello([ExcelArgument(Description = "The name to say hi to")] string name)
         {
             return "Hello " + name;
@@ -21,9 +21,10 @@ namespace ExcelDNATests
 
 
 
-        [ExcelFunction(Description = "My first .NET functions", Category = "ASYNC")]
+        [ExcelFunction(Description = "Custom cell functions", Category = "Custom cell Functions")]
         public static async Task<string> AsyncExample(string uri)
         {
+            string retString = "";
             HttpClient client = new HttpClient();
             client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue(@"application/json"));        // give us json back
             try
@@ -32,16 +33,19 @@ namespace ExcelDNATests
                 {
                     if (response.IsSuccessStatusCode)
                     {
-                        string retString = await response.Content.ReadAsStringAsync();
-                        return retString;
+                        retString = await response.Content.ReadAsStringAsync();
+                    }
+                    else
+                    {
+                        retString = response.ReasonPhrase;
                     }
                 }
             }
             catch (Exception e)
             {
-                string message = e.Message;
+                retString = e.Message;
             }
-            return "darn";
+            return retString;
         }
     }
 }

@@ -13,9 +13,9 @@
         <tabs>
           <tab id='tab1' label='My Tab'>
             <group id='testGroup' label='Write to...'>
-                <button id='writeToSelectedCellBtn' label='SelectedCell' onAction='OnWriteToSelectedCellPressed' image='MagicWand'/>
-                <button id='writeToSpecificCellBtn' label='SpecificCell' onAction='OnWriteToSpecificCellPressed' image='MagicWand'/>
-                <button id='writeToSpecificCellsBtn' label='SpecificCells' onAction='OnWriteToSpecificCellsPressed' image='MagicWand'/>
+                <button id='writeToSelectedCellBtn'   label='SelectedCell'  onAction='OnWriteToSelectedCellPressed'   image='MagicWand'/>
+                <button id='writeToSpecificCellBtn'   label='SpecificCell'  onAction='OnWriteToSpecificCellPressed'   image='MagicWand'/>
+                <button id='writeToSpecificCellsBtn'  label='SpecificCells' onAction='OnWriteToSpecificCellsPressed'  image='MagicWand'/>
             </group>
 
             <group id='apiCallGroup' label='Api Authentication Call'>
