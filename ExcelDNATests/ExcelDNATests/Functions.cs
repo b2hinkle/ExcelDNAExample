@@ -2,19 +2,18 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Net.Http;
-using System.Net.Http.Json;         // Using this for PostAsJsonAsync since we want to use that but aren't using Microsoft.AspNet.WebApi.Client
 using System.Net.Http.Headers;
 using System.Text;
 using System.Threading.Tasks;
 using ExcelDna.Integration;
 using ExcelDna.IntelliSense;
 
-namespace TestExcelAddin
+namespace ExcelDNATests
 {
-    public static class MyFunctions
+    public static class Functions
     {
         [ExcelFunction(Description = "My first .NET functions", Category = "Category A")]
-        public static string SayHello ( [ExcelArgument(Description = "The name to say hi to")] string name)
+        public static string SayHello([ExcelArgument(Description = "The name to say hi to")] string name)
         {
             return "Hello " + name;
         }

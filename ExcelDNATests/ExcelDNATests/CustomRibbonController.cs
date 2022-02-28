@@ -1,17 +1,15 @@
 ﻿using System;
 using System.IO;
 using System.Resources;
-using System.Net.Http.Json;         // Using this for PostAsJsonAsync since we want to use that but aren't using Microsoft.AspNet.WebApi.Client
 using System.Runtime.InteropServices;
 using ExcelDna.Integration.CustomUI;
 using Microsoft.Office.Interop.Excel;
 using System.Net.Http;
 using System.Net.Http.Headers;
 using System.Threading.Tasks;
-using System.Text;
-using System.Text.Json;
+using ExcelDna.Integration;
 
-namespace TestExcelAddin
+namespace ExcelDNATests
 {
     [ComVisible(true)]
     public class CustomRibbonController : ExcelRibbon
@@ -61,7 +59,25 @@ namespace TestExcelAddin
         /* Async ribbon press events can have the same signature as the normal excel async function, just without the static. Also you can return specific kind of task, but won't be a case where you do that since it's just a button being pressed. */
         public async Task OnTestRibbonButtonPressed(IRibbonControl control)
         {
-            HttpClient client = new HttpClient();
+            if (_excel == null)
+            {
+                return;
+            }
+            if (_excel.ActiveCell == null)
+            {
+                return;
+            }
+
+            _excel.ActiveCell.Value2 = "yuoo";
+
+
+            /* 
++             // Not sure this is a solid way to access cells or not but seamed to work
++             Range rangeToWriteTo = (Range)_excel.ActiveSheet.Cells[1, 2];
++             rangeToWriteTo.Value2 = "ayo";
++            */
+
+            /*HttpClient client = new HttpClient();
             client.DefaultRequestHeaders.Accept.Clear();
             client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue(@"application/json"));        // give us json back
 
@@ -91,7 +107,7 @@ namespace TestExcelAddin
             catch (Exception e)
             {
                 string message = e.Message;
-            }
+            }*/
         }
     }
 }

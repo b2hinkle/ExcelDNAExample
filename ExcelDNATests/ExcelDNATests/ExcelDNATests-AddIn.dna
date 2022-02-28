@@ -1,12 +1,27 @@
 <?xml version="1.0" encoding="utf-8"?>
-<DnaLibrary Name="TestExcelAddIn Add-In" RuntimeVersion="v4.0" xmlns="http://schemas.excel-dna.net/addin/2020/07/dnalibrary">
+<DnaLibrary Name="ExcelDNATests Add-In" RuntimeVersion="v4.0" xmlns="http://schemas.excel-dna.net/addin/2020/07/dnalibrary">
   
   <!-- Note that we've added ExplicitRegistration="true" here - this means Excel-DNA won't automatically process the assembly and register.
   In our AutoOpen we can then pre-process functions (e.g. to generate the IObservable wrappers) and then register the functions ourselves. -->
-  <ExternalLibrary Path="TestExcelAddIn.dll" ExplicitExports="false" ExplicitRegistration="true" LoadFromBytes="true" Pack="true" IncludePdb="false" />
-  
+  <ExternalLibrary Path="ExcelDNATests.dll" ExplicitExports="false" ExplicitRegistration="true" LoadFromBytes="true" Pack="true" IncludePdb="false" />
 
-  
+  <!-- UI Ribbon -->
+  <!-- Also noticed I get DisconectedContext exception when mess up from XML -->
+  <CustomUI>
+    <customUI xmlns='http://schemas.microsoft.com/office/2009/07/customui' onLoad="OnLoad" loadImage='LoadImage'>
+      <ribbon>
+        <tabs>
+          <tab id='tab1' label='My Tab'>
+            <group id='group1' label='My Group'>
+              <button id='button1' label='Test Ribbon Button' onAction='OnTestRibbonButtonPressed' image='MagicWand'/>
+            </group>
+          </tab>
+        </tabs>
+      </ribbon>
+    </customUI>
+  </CustomUI>
+
+  <Image Name='MagicWand' Path='Images\MagicWand.png' Pack='true' />
   
   
   <!--
@@ -25,21 +40,5 @@
 
        Excel-DNA also allows the XML for ribbon UI extensions to be specified in the .dna file.
        See the main Excel-DNA site at https://excel-dna.net for downloads of the full distribution.
-  -->
-
-
-  <CustomUI>
-    <customUI xmlns='http://schemas.microsoft.com/office/2009/07/customui' onLoad="OnLoad">
-      <ribbon>
-        <tabs>
-          <tab id='tab1' label='My Tab'>
-            <group id='group1' label='My Group'>
-              <button id='button1' label='Test Ribbon Button' onAction='OnTestRibbonButtonPressed'/>
-            </group>
-          </tab>
-        </tabs>
-      </ribbon>
-    </customUI>
-  </CustomUI>
-
+  -->  
 </DnaLibrary>
