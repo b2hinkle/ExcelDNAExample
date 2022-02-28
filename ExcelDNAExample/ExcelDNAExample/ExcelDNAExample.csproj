@@ -79,7 +79,7 @@
     <None Include="ExcelDna.DnaLibrary.xsd">
       <SubType>Designer</SubType>
     </None>
-    <None Include="ExcelDNATests-AddIn.dna" />
+    <None Include="ExcelDNAExample-AddIn.dna" />
     <None Include="packages.config" />
     <None Include="Properties\ExcelDna.Build.props" />
   </ItemGroup>

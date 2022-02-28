@@ -9,7 +9,7 @@ using System.Net.Http.Headers;
 using System.Threading.Tasks;
 using ExcelDna.Integration;
 
-namespace ExcelDNATests
+namespace ExcelDNAExample
 {
     [ComVisible(true)]
     public class CustomRibbonController : ExcelRibbon

@@ -9,7 +9,7 @@ using ExcelDna.IntelliSense;
 using ExcelDna.Registration;
 using Microsoft.Office.Interop.Excel;
 
-namespace ExcelDNATests
+namespace ExcelDNAExample
 {
     internal class ApplicationEvents : IExcelAddIn
     {

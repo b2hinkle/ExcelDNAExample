@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
-<DnaLibrary Name="ExcelDNATests Add-In" RuntimeVersion="v4.0" xmlns="http://schemas.excel-dna.net/addin/2020/07/dnalibrary">
+<DnaLibrary Name="ExcelDNAExample Add-In" RuntimeVersion="v4.0" xmlns="http://schemas.excel-dna.net/addin/2020/07/dnalibrary">
   
   <!-- Note that we've added ExplicitRegistration="true" here - this means Excel-DNA won't automatically process the assembly and register.
   In our AutoOpen we can then pre-process functions (e.g. to generate the IObservable wrappers) and then register the functions ourselves. -->
-  <ExternalLibrary Path="ExcelDNATests.dll" ExplicitExports="false" ExplicitRegistration="true" LoadFromBytes="true" Pack="true" IncludePdb="false" />
+  <ExternalLibrary Path="ExcelDNAExample.dll" ExplicitExports="false" ExplicitRegistration="true" LoadFromBytes="true" Pack="true" IncludePdb="false" />
 
   <!-- UI Ribbon -->
   <!-- Also noticed I get a runtime "DisconectedContext" exception when XML isn't right so don't mess up -->
