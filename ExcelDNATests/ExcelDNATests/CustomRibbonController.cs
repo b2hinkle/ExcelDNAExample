@@ -16,6 +16,9 @@ namespace ExcelDNATests
     {
         private Application excelApp;
         private IRibbonUI thisRibbon;
+        
+        string userId    = "";
+        string authToken = "";
 
         public CustomRibbonController()
         {
@@ -28,7 +31,7 @@ namespace ExcelDNATests
             {
                 throw new ArgumentNullException(nameof(ribbon));
             }
-
+            
             thisRibbon = ribbon;
 
             excelApp.WorkbookActivate += OnInvalidateRibbon;
@@ -43,7 +46,14 @@ namespace ExcelDNATests
         }
 
 
-
+        public void OnUserIdEditBoxChange(IRibbonControl control, string newText)
+        {
+            userId = newText;
+        }
+        public void OnAuthTokenEditBoxChange(IRibbonControl control, string newText)
+        {
+            authToken = newText;
+        }
 
 
 
@@ -57,10 +67,8 @@ namespace ExcelDNATests
 
 
         /* 
-         *   Async ribbon press events can have the same signature as the normal excel async function, just without the static. Also you can return specific kind of task, but won't be a case where you do that since it's just a button being pressed. 
-         *   
-         *   Also it seams like we shouoldn't be accessing COM objects on a different thread, but it seams to be working flawlessly rn. I will leave how to queue logic for the main thread here (below) just in case we end up doing it.
-         *   "Transitioning to the main thread (or a macro context) from another thread. Excel-DNA has a helper method ExcelAsyncUtil.QueueAsMacro that can be called from another thread or a timer event, to transition to a context where the object model can be reliably used."
+         *  Async ribbon press events can have the same signature as the normal excel async function, just without the static. Also you can return specific kind of task, but won't be a case where you do that since it's just a button being pressed. 
+         *  Only caveat with async functions is that they must transition to the main thread in order to interact with Excel. Just use ExcelAsyncUtil.QueueAsMacro(() => { }) for that 
          */
 
         public async Task OnAPIAuthPostCallPressed(IRibbonControl control)
@@ -69,8 +77,8 @@ namespace ExcelDNATests
             client.DefaultRequestHeaders.Accept.Clear();
             client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue(@"application/json"));        // give us json back
 
-            string userName = "ac7da12c-520e-2dd4-4365-d5f6346b9a23";
-            string password = "uIKoOq3LwLDY9E7pilsE";
+            string userName = userId;       // ac7da12c-520e-2dd4-4365-d5f6346b9a23
+            string password = authToken;    // uIKoOq3LwLDY9E7pilsE
             string city = "Raleigh";
             string state = "Nc";
             string url = $"https://us-zipcode.api.smartystreets.com/lookup?auth-id={userName}&auth-token={password}&city={city}&state={state}";     // No body is used for this post req. Query params instead
@@ -80,7 +88,7 @@ namespace ExcelDNATests
             byte[] authToken = Encoding.ASCII.GetBytes($"{userName}:{password}");
             client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Basic", Convert.ToBase64String(authToken));
 #endif
-            string responseString;
+            string responseString = "---";
             try
             {
                 HttpRequestMessage req = new HttpRequestMessage(HttpMethod.Post, url);
@@ -90,12 +98,21 @@ namespace ExcelDNATests
                     {
                         responseString = await response.Content.ReadAsStringAsync();
                     }
+                    else
+                    {
+                        responseString = response.ReasonPhrase;
+                    }
                 }
             }
             catch (Exception e)
             {
-                responseString = "darn";
+                responseString = e.Message;
+
             }
+
+            ExcelAsyncUtil.QueueAsMacro(() => { excelApp.ActiveCell.Value2 = responseString; });    // Async functions must use   ExcelAsyncUtil.QueueAsMacro(() => { })   when interacting with Excel
+
+
         }
 
         public void OnWriteToSelectedCellPressed(IRibbonControl control)

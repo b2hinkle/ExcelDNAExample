@@ -19,8 +19,8 @@
             </group>
 
             <group id='apiCallGroup' label='Api Authentication Call'>
-              <editBox id='userIdEditBox' label='User Id'/>
-              <editBox id='authenticationTokenEditBox' label='Auth Token'/>
+              <editBox id='userIdEditBox'               label='User Id'          onChange="OnUserIdEditBoxChange"/>
+              <editBox id='authTokenEditBox'            label='Auth Token'       onChange="OnAuthTokenEditBoxChange"/>
               <button id='apiAuthPostCallBtn' label='APIAuthPostCall' onAction='OnAPIAuthPostCallPressed' image='MagicWand'/>
             </group>
           </tab>
