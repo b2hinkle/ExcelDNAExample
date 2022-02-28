@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 using ExcelDna.Integration;
 using ExcelDna.IntelliSense;
 
-namespace ExcelDNATests
+namespace ExcelDNAExample
 {
     public static class Functions
     {
