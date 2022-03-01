@@ -25,11 +25,9 @@ namespace ExcelDNAExample
         public static async Task<string> AsyncExample(string uri)
         {
             string retString = "";
-            HttpClient client = new HttpClient();
-            client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue(@"application/json"));        // give us json back
             try
             {
-                using (HttpResponseMessage response = await client.GetAsync(uri))
+                using (HttpResponseMessage response = await AddinClient.GetHttpClient().GetAsync(uri))
                 {
                     if (response.IsSuccessStatusCode)
                     {

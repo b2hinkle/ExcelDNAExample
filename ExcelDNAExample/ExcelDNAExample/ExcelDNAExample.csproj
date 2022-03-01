@@ -64,6 +64,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="AddinClient.cs" />
     <Compile Include="ApplicationEvents.cs" />
     <Compile Include="CustomRibbonController.cs" />
     <Compile Include="Functions.cs" />

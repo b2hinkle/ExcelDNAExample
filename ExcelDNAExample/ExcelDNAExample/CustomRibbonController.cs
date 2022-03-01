@@ -78,10 +78,6 @@ namespace ExcelDNAExample
 
         public async Task OnAPIAuthPostCallPressed(IRibbonControl control)
         {
-            HttpClient client = new HttpClient();
-            client.DefaultRequestHeaders.Accept.Clear();
-            client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue(@"application/json"));        // give us json back
-
             string req_userName = userId;       // ac7da12c-520e-2dd4-4365-d5f6346b9a23
             string req_password = authToken;    // uIKoOq3LwLDY9E7pilsE
             string req_zipcode = zipcode;
@@ -96,7 +92,7 @@ namespace ExcelDNAExample
             try
             {
                 HttpRequestMessage req = new HttpRequestMessage(HttpMethod.Post, url);
-                using (HttpResponseMessage response = await client.SendAsync(req))
+                using (HttpResponseMessage response = await AddinClient.GetHttpClient().SendAsync(req))
                 {
                     if (response.IsSuccessStatusCode)
                     {
