@@ -7,8 +7,8 @@
     <ProjectGuid>{BA885D59-EB66-4B68-AE47-4BE758EBE28C}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>ExcelDNATests</RootNamespace>
-    <AssemblyName>ExcelDNATests</AssemblyName>
+    <RootNamespace>ExcelDNAExample</RootNamespace>
+    <AssemblyName>ExcelDNAExample</AssemblyName>
     <TargetFrameworkVersion>v4.8</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <Deterministic>true</Deterministic>

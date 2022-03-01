@@ -12,7 +12,7 @@ using ExcelDna.Integration;
 namespace ExcelDNAExample
 {
     [ComVisible(true)]
-    internal sealed class CustomRibbonController : ExcelRibbon
+    public sealed class CustomRibbonController : ExcelRibbon
     {
         private Application excelApp;
         private IRibbonUI thisRibbon;
