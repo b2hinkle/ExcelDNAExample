@@ -11,7 +11,7 @@ using Microsoft.Office.Interop.Excel;
 
 namespace ExcelDNAExample
 {
-    internal class ApplicationEvents : IExcelAddIn
+    internal sealed class ApplicationEvents : IExcelAddIn
     {
         public void AutoOpen()
         {

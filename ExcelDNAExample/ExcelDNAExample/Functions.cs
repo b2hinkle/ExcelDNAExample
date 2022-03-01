@@ -10,7 +10,7 @@ using ExcelDna.IntelliSense;
 
 namespace ExcelDNAExample
 {
-    public static class Functions
+    internal static class Functions
     {
         [ExcelFunction(Description = "Custom cell functions", Category = "Custom cell Functions")]
         public static string SayHello([ExcelArgument(Description = "The name to say hi to")] string name)

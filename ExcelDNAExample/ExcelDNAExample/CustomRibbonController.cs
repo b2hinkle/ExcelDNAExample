@@ -12,14 +12,14 @@ using ExcelDna.Integration;
 namespace ExcelDNAExample
 {
     [ComVisible(true)]
-    public class CustomRibbonController : ExcelRibbon
+    internal sealed class CustomRibbonController : ExcelRibbon
     {
         private Application excelApp;
         private IRibbonUI thisRibbon;
         
-        string userId    = "";
-        string authToken = "";
-        string zipcode   = "";
+        private string userId    = "";
+        private string authToken = "";
+        private string zipcode   = "";
 
         public CustomRibbonController()
         {
