@@ -45,8 +45,6 @@ namespace ExcelDNAExample
         {
             thisRibbon.Invalidate();
         }
-
-
         public void OnUserIdEditBoxChange(IRibbonControl control, string newText)
         {
             userId = newText;
@@ -62,7 +60,47 @@ namespace ExcelDNAExample
 
 
 
+        public void OnWriteToSelectedCellPressed(IRibbonControl control)
+        {
+            Range rangeToWriteTo = excelApp.ActiveCell;
 
+            rangeToWriteTo.Value2 = "written";
+        }
+
+        // Accessing specific cell
+        public void OnWriteToSpecificCellPressed(IRibbonControl control)
+        {
+
+            Worksheet activeSheet = (Worksheet)excelApp.ActiveSheet;
+            Range rangeToWriteTo = activeSheet.Range["A1"];
+#if false
+            Range rangeToWriteTo = activeSheet.Cells[1, 1];         // Alternative way
+#endif
+
+            rangeToWriteTo.Value2 = "written";
+
+
+
+
+        }
+        // Writing to specific cells
+        public void OnWriteToSpecificCellsPressed(IRibbonControl control)
+        {
+            Worksheet activeSheet = (Worksheet)excelApp.ActiveSheet;
+
+            object startSelection = activeSheet.Range["B2"];
+            object endSelection = activeSheet.Range["AX20"];        // Excel uses patern (A,B,C .... AA,AB,AC, .... BA,BB,BC). In this case AX is the 50th collumn
+#if false
+            // Alternative way.....
+            object startSelection = activeSheet.Cells[2, 2];
+            object endSelection = activeSheet.Cells[20, 50];
+#endif
+
+            Range rangeToWriteTo = activeSheet.Range[startSelection, endSelection];
+
+
+            rangeToWriteTo.Value2 = "written";
+        }
 
 
 
@@ -143,48 +181,6 @@ namespace ExcelDNAExample
             {
                 excelApp.ActiveCell.Value2 = responseString;
             });
-        }
-
-        public void OnWriteToSelectedCellPressed(IRibbonControl control)
-        {
-            Range rangeToWriteTo = excelApp.ActiveCell;
-
-            rangeToWriteTo.Value2 = "written";
-        }
-
-        // Accessing specific cell
-        public void OnWriteToSpecificCellPressed(IRibbonControl control)
-        {
-            
-            Worksheet activeSheet = (Worksheet)excelApp.ActiveSheet;
-            Range rangeToWriteTo = activeSheet.Range["A1"];
-#if false
-            Range rangeToWriteTo = activeSheet.Cells[1, 1];         // Alternative way
-#endif
-
-            rangeToWriteTo.Value2 = "written";
-
-
-
-
-        }
-        // Writing to specific cells
-        public void OnWriteToSpecificCellsPressed(IRibbonControl control)
-        {
-            Worksheet activeSheet = (Worksheet)excelApp.ActiveSheet;
-
-            object startSelection = activeSheet.Range["B2"];
-            object endSelection = activeSheet.Range["AX20"];        // Excel uses patern (A,B,C .... AA,AB,AC, .... BA,BB,BC). In this case AX is the 50th collumn
-#if false
-            // Alternative way.....
-            object startSelection = activeSheet.Cells[2, 2];
-            object endSelection = activeSheet.Cells[20, 50];
-#endif
-
-            Range rangeToWriteTo = activeSheet.Range[startSelection, endSelection];
-
-
-            rangeToWriteTo.Value2 = "written";
         }
     }
 }
