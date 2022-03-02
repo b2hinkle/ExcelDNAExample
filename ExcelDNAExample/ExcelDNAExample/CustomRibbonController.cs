@@ -116,6 +116,34 @@ namespace ExcelDNAExample
                 excelApp.ActiveCell.Value2 = responseString; 
             });
         }
+        public async Task OnRecommendActivityBtnPressed(IRibbonControl control)
+        {
+            string responseString = "";
+            try
+            {
+                using (HttpResponseMessage response = await AddinClient.GetHttpClient().GetAsync($"https://www.boredapi.com/api/activity"))
+                {
+                    if (response.IsSuccessStatusCode)
+                    {
+                        responseString = await response.Content.ReadAsStringAsync();
+                    }
+                    else
+                    {
+                        responseString = response.ReasonPhrase;
+                    }
+                }
+            }
+            catch (Exception e)
+            {
+                responseString = e.Message;
+            }
+
+            // Async functions must use   ExcelAsyncUtil.QueueAsMacro(() => { })   when doing operations on Excel
+            ExcelAsyncUtil.QueueAsMacro(() =>
+            {
+                excelApp.ActiveCell.Value2 = responseString;
+            });
+        }
 
         public void OnWriteToSelectedCellPressed(IRibbonControl control)
         {
