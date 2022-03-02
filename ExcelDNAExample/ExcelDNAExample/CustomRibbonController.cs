@@ -117,7 +117,7 @@ namespace ExcelDNAExample
          *  Only caveat with async functions is that they must transition to the main thread when doing operations on Excel. Just use ExcelAsyncUtil.QueueAsMacro(() => { }) for that 
          */
 
-        public async Task OnAPIAuthPostCallPressed(IRibbonControl control)
+        public async Task OnAPIAuthPostCallBtnPressed(IRibbonControl control)
         {
             string req_userName = userId;       // ac7da12c-520e-2dd4-4365-d5f6346b9a23
             string req_password = authToken;    // uIKoOq3LwLDY9E7pilsE
@@ -178,7 +178,6 @@ namespace ExcelDNAExample
             {
                 responseString = e.Message;
             }
-
 
 
 
