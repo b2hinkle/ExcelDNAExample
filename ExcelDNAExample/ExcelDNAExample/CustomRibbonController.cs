@@ -12,14 +12,14 @@ using ExcelDna.Integration;
 namespace ExcelDNAExample
 {
     [ComVisible(true)]
-    public class CustomRibbonController : ExcelRibbon
+    public sealed class CustomRibbonController : ExcelRibbon
     {
         private Application excelApp;
         private IRibbonUI thisRibbon;
         
-        string userId    = "";
-        string authToken = "";
-        string zipcode   = "";
+        private string userId    = "";
+        private string authToken = "";
+        private string zipcode   = "";
 
         public CustomRibbonController()
         {
@@ -78,10 +78,6 @@ namespace ExcelDNAExample
 
         public async Task OnAPIAuthPostCallPressed(IRibbonControl control)
         {
-            HttpClient client = new HttpClient();
-            client.DefaultRequestHeaders.Accept.Clear();
-            client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue(@"application/json"));        // give us json back
-
             string req_userName = userId;       // ac7da12c-520e-2dd4-4365-d5f6346b9a23
             string req_password = authToken;    // uIKoOq3LwLDY9E7pilsE
             string req_zipcode = zipcode;
@@ -96,7 +92,7 @@ namespace ExcelDNAExample
             try
             {
                 HttpRequestMessage req = new HttpRequestMessage(HttpMethod.Post, url);
-                using (HttpResponseMessage response = await client.SendAsync(req))
+                using (HttpResponseMessage response = await AddinClient.GetHttpClient().SendAsync(req))
                 {
                     if (response.IsSuccessStatusCode)
                     {
@@ -118,6 +114,34 @@ namespace ExcelDNAExample
             ExcelAsyncUtil.QueueAsMacro( () => 
             { 
                 excelApp.ActiveCell.Value2 = responseString; 
+            });
+        }
+        public async Task OnRecommendActivityBtnPressed(IRibbonControl control)
+        {
+            string responseString = "";
+            try
+            {
+                using (HttpResponseMessage response = await AddinClient.GetHttpClient().GetAsync($"https://www.boredapi.com/api/activity"))
+                {
+                    if (response.IsSuccessStatusCode)
+                    {
+                        responseString = await response.Content.ReadAsStringAsync();
+                    }
+                    else
+                    {
+                        responseString = response.ReasonPhrase;
+                    }
+                }
+            }
+            catch (Exception e)
+            {
+                responseString = e.Message;
+            }
+
+            // Async functions must use   ExcelAsyncUtil.QueueAsMacro(() => { })   when doing operations on Excel
+            ExcelAsyncUtil.QueueAsMacro(() =>
+            {
+                excelApp.ActiveCell.Value2 = responseString;
             });
         }
 

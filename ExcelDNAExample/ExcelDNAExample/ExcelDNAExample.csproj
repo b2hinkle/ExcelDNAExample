@@ -7,8 +7,8 @@
     <ProjectGuid>{BA885D59-EB66-4B68-AE47-4BE758EBE28C}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>ExcelDNATests</RootNamespace>
-    <AssemblyName>ExcelDNATests</AssemblyName>
+    <RootNamespace>ExcelDNAExample</RootNamespace>
+    <AssemblyName>ExcelDNAExample</AssemblyName>
     <TargetFrameworkVersion>v4.8</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <Deterministic>true</Deterministic>
@@ -64,6 +64,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="AddinClient.cs" />
     <Compile Include="ApplicationEvents.cs" />
     <Compile Include="CustomRibbonController.cs" />
     <Compile Include="Functions.cs" />
@@ -79,7 +80,9 @@
     <None Include="ExcelDna.DnaLibrary.xsd">
       <SubType>Designer</SubType>
     </None>
-    <None Include="ExcelDNAExample-AddIn.dna" />
+    <None Include="ExcelDNAExample-AddIn.dna">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
     <None Include="packages.config" />
     <None Include="Properties\ExcelDna.Build.props" />
   </ItemGroup>

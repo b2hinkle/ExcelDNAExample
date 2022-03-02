@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Net;
+using System.Net.Http;
 using System.Text;
 using System.Threading.Tasks;
 using ExcelDna.Integration;
@@ -11,7 +12,7 @@ using Microsoft.Office.Interop.Excel;
 
 namespace ExcelDNAExample
 {
-    internal class ApplicationEvents : IExcelAddIn
+    internal sealed class ApplicationEvents : IExcelAddIn
     {
         public void AutoOpen()
         {
@@ -38,13 +39,15 @@ namespace ExcelDNAExample
         public void AutoClose()
         {
             IntelliSenseServer.Uninstall();
+
+            AddinClient.GetHttpClient().Dispose();
         }
 
 
 
 
 
-        void RegisterFunctions()
+        private void RegisterFunctions()
         {
             ExcelRegistration.GetExcelFunctions().ProcessAsyncRegistrations(nativeAsyncIfAvailable: false).RegisterFunctions();
         }

@@ -6,23 +6,31 @@
   <ExternalLibrary Path="ExcelDNAExample.dll" ExplicitExports="false" ExplicitRegistration="true" LoadFromBytes="true" Pack="true" IncludePdb="false" />
 
   <!-- UI Ribbon -->
-  <!-- Also noticed I get a runtime "DisconectedContext" exception when XML isn't right so don't mess up -->
+  <!-- 
+      Some things I've noticed with ExcelDNA UI:
+   1) The UI doesn't update when changing this right after a clone somereason. Found out a fix (copy if newer, rebuild, and then change it back to don't copy). Consider leaving it on copy if newer though so we don't have to worry about it.
+   2) I get a runtime "DisconectedContext" exception when XML isn't right so don't mess up
+   -->
   <CustomUI>
     <customUI xmlns='http://schemas.microsoft.com/office/2009/07/customui' onLoad="OnLoad" loadImage='LoadImage'>
       <ribbon>
         <tabs>
           <tab id='tab1' label='My Tab'>
             <group id='testGroup' label='Write to...'>
-                <button id='writeToSelectedCellBtn'   label='SelectedCell'  onAction='OnWriteToSelectedCellPressed'   image='MagicWand'/>
-                <button id='writeToSpecificCellBtn'   label='SpecificCell'  onAction='OnWriteToSpecificCellPressed'   image='MagicWand'/>
-                <button id='writeToSpecificCellsBtn'  label='SpecificCells' onAction='OnWriteToSpecificCellsPressed'  image='MagicWand'/>
+              <button id='writeToSelectedCellBtn'   label='SelectedCell'  onAction='OnWriteToSelectedCellPressed'   image='MagicWand'/>
+              <button id='writeToSpecificCellBtn'   label='SpecificCell'  onAction='OnWriteToSpecificCellPressed'   image='MagicWand'/>
+              <button id='writeToSpecificCellsBtn'  label='SpecificCells' onAction='OnWriteToSpecificCellsPressed'  image='MagicWand'/>
             </group>
 
-            <group id='apiCallGroup' label='Api Authentication Call'>
+            <group id='ZipcodeApiGroup' label='Zipcode Api Group'>
               <editBox id='userIdEditBox'               label='User Id'          onChange="OnUserIdEditBoxChange"/>
               <editBox id='authTokenEditBox'            label='Auth Token'       onChange="OnAuthTokenEditBoxChange"/>
               <editBox id='zipcodeEditBox'              label='Zipcode'          onChange="OnZipcodeEditBoxChange"/>
-              <button id='apiAuthPostCallBtn' label='APIAuthPostCall' onAction='OnAPIAuthPostCallPressed' image='api' size='large' />
+              <button id='apiAuthPostCallBtn' label='APIAuthPostCall' onAction='OnAPIAuthPostCallBtnPressed' image='api' size='large' />
+            </group>
+
+            <group id='BoredApiGroup' label='Bored Api'>
+              <button id='recommendActivityBtn' label='Recommend Activity' onAction='OnRecommendActivityBtnPressed' image='api' size='large' />
             </group>
           </tab>
         </tabs>
