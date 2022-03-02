@@ -80,7 +80,9 @@
     <None Include="ExcelDna.DnaLibrary.xsd">
       <SubType>Designer</SubType>
     </None>
-    <None Include="ExcelDNAExample-AddIn.dna" />
+    <None Include="ExcelDNAExample-AddIn.dna">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
     <None Include="packages.config" />
     <None Include="Properties\ExcelDna.Build.props" />
   </ItemGroup>
