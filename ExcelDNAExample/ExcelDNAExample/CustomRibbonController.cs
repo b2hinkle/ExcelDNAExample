@@ -8,7 +8,6 @@ using System.Net.Http;
 using System.Net.Http.Headers;
 using System.Threading.Tasks;
 using ExcelDna.Integration;
-using ExcelDNAExample.Models;
 using System.Collections.Generic;
 using Newtonsoft.Json;
 
@@ -194,23 +193,37 @@ namespace ExcelDNAExample
             
 
 
-
             string cellString = "failed get value for cell";
             // Async functions must use   ExcelAsyncUtil.QueueAsMacro(() => { })   when doing operations on Excel
             ExcelAsyncUtil.QueueAsMacro(() =>
             {
-                int activeColumn = excelApp.Selection.Column; 
-                int activeRow    = excelApp.Selection.Row;
+                if (dictionary.Count <= 0)
+                {
+                    return;     // Failed to get data
+                }
+
+                Range selectionRange = excelApp.Selection;
+                Range newDataRangeStart = excelApp.Cells[selectionRange.Row, selectionRange.Column];
+                Range newDataRangeEnd = excelApp.Cells[selectionRange.Row + (dictionary.Count-  1), selectionRange.Column + 1];
+                Range newDataRange = excelApp.Range[newDataRangeStart, newDataRangeEnd];
 
 
+                double numOfCellsToPopulate = dictionary.Count * 2;
+                double numBlankCells = excelApp.WorksheetFunction.CountBlank(newDataRange);
+                if (numOfCellsToPopulate != numBlankCells)
+                {
+                    return;
+                }
+
+                newDataRange.Borders.Weight = XlBorderWeight.xlThick;
+                newDataRange.Interior.Color = XlRgbColor.rgbLightGrey;
 
                 int rowOffset = 0;
                 foreach (KeyValuePair<string, dynamic> kv in dictionary)
                 {
-                    Range rangeToWriteTo = excelApp.Cells[activeRow + rowOffset, activeColumn];
-
+                    Range rangeToWriteTo = excelApp.Cells[newDataRangeStart.Row + rowOffset, newDataRangeStart.Column];
                     rangeToWriteTo.Value2 = kv.Key;
-                    rangeToWriteTo = excelApp.Cells[activeRow + rowOffset, activeColumn + 1];
+                    rangeToWriteTo = excelApp.Cells[newDataRangeStart.Row + rowOffset, newDataRangeStart.Column + 1];
                     rangeToWriteTo.Value2 = kv.Value;
                     ++rowOffset;
                 }

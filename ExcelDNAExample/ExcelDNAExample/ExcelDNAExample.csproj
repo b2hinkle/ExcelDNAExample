@@ -96,7 +96,6 @@
     <Compile Include="ApplicationEvents.cs" />
     <Compile Include="CustomRibbonController.cs" />
     <Compile Include="Functions.cs" />
-    <Compile Include="Models\ActivityModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
