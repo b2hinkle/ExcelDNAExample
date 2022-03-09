@@ -101,9 +101,9 @@
   <ItemGroup>
     <Compile Include="AddinClient.cs" />
     <Compile Include="ApplicationEvents.cs" />
-    <Compile Include="CustomRibbonController.cs" />
-    <Compile Include="ExcelDNAExampleHelpers.cs" />
-    <Compile Include="Functions.cs" />
+    <Compile Include="Functionality\CustomRibbonController.cs" />
+    <Compile Include="Functionality\ExcelDNAExampleHelpers.cs" />
+    <Compile Include="Functionality\Functions.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
