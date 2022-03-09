@@ -176,7 +176,7 @@ namespace ExcelDNAExample
 
 
         /* 
-         * This GET api call demonstrates neatly displaying the api data across multible cells as key value pairs (2 collumns, x amount of rows).
+         * Simple GET request that utilizes our WriteDictionaryToSheet() helper function to write the response data to the sheet
          */
         public async Task OnRecommendActivityBtnPressed(IRibbonControl control)
         {
@@ -201,53 +201,18 @@ namespace ExcelDNAExample
                 responseString = e.Message;     // if an error happended while calling on the endpoint, put the error message in the cell
             }
 
-
-
             // Parse our responseString into key-value pairs
             Dictionary<string, dynamic> responseDictionary = JsonConvert.DeserializeObject<Dictionary<string, dynamic>>(responseString);
-            
-            // Now lets write to the cells
+
+
+
+            // Now lets write to the cells. To do this we will use a helper function we made, WriteDictionaryToSheet()
             // Async functions must use   ExcelAsyncUtil.QueueAsMacro(() => { })   when doing operations on Excel
             ExcelAsyncUtil.QueueAsMacro(() =>
             {
-                if (responseDictionary.Count <= 0)
-                {
-                    return;     // No data to write
-                }
-
-                // Lets figure out which cells we need to write to
-                Range selectionRange = excelApp.Selection;
-                Range newDataRangeStart = excelApp.Cells[selectionRange.Row, selectionRange.Column];
-                Range newDataRangeEnd = excelApp.Cells[selectionRange.Row + (responseDictionary.Count - 1), selectionRange.Column + 1];
-
-                Range newDataRange = excelApp.Range[newDataRangeStart, newDataRangeEnd];    // this is the cells we need to write to
-
-
-                // If there is already data in the cells, return (prevents accidentally overwritting your data)
-                double numOfCellsToPopulate = responseDictionary.Count * 2;
-                double numBlankCells = excelApp.WorksheetFunction.CountBlank(newDataRange);
-                if (numOfCellsToPopulate != numBlankCells)
-                {
-                    return;
-                }
-
-                // Each key value pair represents a row. Write to each of them
-                int row = 0;
-                foreach (KeyValuePair<string, dynamic> keyValuePair in responseDictionary)
-                {
-                    Range cellToWriteTo;
-                    // write the key to the 1st collumn
-                    cellToWriteTo = excelApp.Cells[newDataRangeStart.Row + row, newDataRangeStart.Column];
-                    cellToWriteTo.Value2 = keyValuePair.Key;
-                    cellToWriteTo.Interior.Color = XlRgbColor.rgbLightGrey;  // shade cell that we just wrote to
-
-                    // write the value to the 2nd collumn
-                    cellToWriteTo = excelApp.Cells[newDataRangeStart.Row + row, newDataRangeStart.Column + 1];
-                    cellToWriteTo.Value2 = keyValuePair.Value;
-                    cellToWriteTo.Interior.Color = XlRgbColor.rgbLightGrey;  // shade cell that we just wrote to
-
-                    ++row;    // Move to next row
-                }
+                Range cellToGenerateData = excelApp.Selection;
+                bool doNotOverwriteExistingData = true;
+                ExcelDNAExampleHelpers.WriteDictionaryToSheet(responseDictionary, cellToGenerateData, doNotOverwriteExistingData, excelApp);
             });
         }
     }
