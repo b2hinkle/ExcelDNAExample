@@ -10,6 +10,7 @@ using System.Threading.Tasks;
 using ExcelDna.Integration;
 using System.Collections.Generic;
 using Newtonsoft.Json;
+using System.Net.Http.Json;
 using System.Text;
 
 namespace ExcelDNAExample
@@ -20,9 +21,9 @@ namespace ExcelDNAExample
         private Application excelApp;
         private IRibbonUI thisRibbon;
         
-        private string userId    = "";
-        private string authToken = "";
-        private string zipcode   = "";
+        private string textboxValue_userId    = "";
+        private string textboxValue_authToken = "";
+        private string textboxValue_zipcode   = "";
 
         public CustomRibbonController()
         {
@@ -50,15 +51,15 @@ namespace ExcelDNAExample
         }
         public void OnUserIdEditBoxChange(IRibbonControl control, string newText)
         {
-            userId = newText;
+            textboxValue_userId = newText;
         }
         public void OnAuthTokenEditBoxChange(IRibbonControl control, string newText)
         {
-            authToken = newText;
+            textboxValue_authToken = newText;
         }
         public void OnZipcodeEditBoxChange(IRibbonControl control, string newText)
         {
-            zipcode = newText;
+            textboxValue_zipcode = newText;
         }
 
 
@@ -119,21 +120,27 @@ namespace ExcelDNAExample
 
         public async Task OnAPIAuthPostCallBtnPressed(IRibbonControl control)
         {
-            string req_userName = userId;       // ac7da12c-520e-2dd4-4365-d5f6346b9a23
-            string req_password = authToken;    // uIKoOq3LwLDY9E7pilsE
-            string req_zipcode = zipcode;
-            string url = $"https://us-zipcode.api.smartystreets.com/lookup?auth-id={req_userName}&auth-token={req_password}&zipcode={req_zipcode}";     // No body is used for this post req. Query params instead
+            string req_userName = textboxValue_userId;       // ac7da12c-520e-2dd4-4365-d5f6346b9a23
+            string req_password = textboxValue_authToken;    // uIKoOq3LwLDY9E7pilsE
+            string url = $"https://us-zipcode.api.smartystreets.com/lookup?auth-id={req_userName}&auth-token={req_password}";     // auth-id and auth-token are passed through the url, not the body. Safe because https
 
 #if false
             // An endpoint may require the username and password to be in the header (instead of the url). In that case put it in the Authorization header
             byte[] authorization = Encoding.ASCII.GetBytes($"{userId}:{authToken}");
             AddinClient.GetHttpClient().DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Basic", Convert.ToBase64String(authorization));
 #endif
+
+            string req_zipcode = textboxValue_zipcode;
+            // zipcode parameter is passed through the request body as json
+            List<object> bodyJsonData = new List<object>()
+            {
+                new {zipcode = req_zipcode}
+            };
             string responseString = "---";
             try
             {
-                HttpRequestMessage req = new HttpRequestMessage(HttpMethod.Post, url);
-                using (HttpResponseMessage response = await AddinClient.GetHttpClient().SendAsync(req))
+                //HttpRequestMessage req = new HttpRequestMessage(HttpMethod.Post, url);
+                using (HttpResponseMessage response = await AddinClient.GetHttpClient().PostAsJsonAsync(url, bodyJsonData))
                 {
                     if (response.IsSuccessStatusCode)
                     {
