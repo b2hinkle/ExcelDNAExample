@@ -4,7 +4,7 @@ Demonstrates some useful/common functionality for Excel DNA add-ins (ie. multith
 ![image](https://user-images.githubusercontent.com/7013902/155989182-c76cccc6-88f0-47ba-95cb-f04719f5c9a5.png)
 
 Notes for building and running:\
-Under the "Debug" section in your ExcelDNAExample project settings......\
+Under the "Debug" section in your ExcelDNAExample project settings......
 * Set your "Start external program" path to\
 **C:\Program Files\Microsoft Office\root\Office16\EXCEL.EXE**
 * Set your "Command line arguments" to\
