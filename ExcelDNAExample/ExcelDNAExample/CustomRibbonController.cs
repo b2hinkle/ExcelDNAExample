@@ -125,8 +125,8 @@ namespace ExcelDNAExample
             string url = $"https://us-zipcode.api.smartystreets.com/lookup?auth-id={req_userName}&auth-token={req_password}";     // auth-id and auth-token are passed through the url, not the body. Safe because https
 
 #if false
-            // An endpoint may require the username and password to be in the header (instead of the url). In that case put it in the Authorization header
-            byte[] authorization = Encoding.ASCII.GetBytes($"{userId}:{authToken}");
+            // Some endpoints may require the username and password to be sent through the header instead. In that case put it in the Authorization header
+            byte[] authorization = Encoding.ASCII.GetBytes($"{textboxValue_userId}:{textboxValue_authToken}");
             AddinClient.GetHttpClient().DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Basic", Convert.ToBase64String(authorization));
 #endif
 
@@ -136,32 +136,31 @@ namespace ExcelDNAExample
             {
                 new {zipcode = req_zipcode}
             };
-            string responseString = "---";
+            string cellValue = "---";
             try
             {
-                //HttpRequestMessage req = new HttpRequestMessage(HttpMethod.Post, url);
                 using (HttpResponseMessage response = await AddinClient.GetHttpClient().PostAsJsonAsync(url, bodyJsonData))
                 {
                     if (response.IsSuccessStatusCode)
                     {
-                        responseString = await response.Content.ReadAsStringAsync();
+                        cellValue = await response.Content.ReadAsStringAsync();
                     }
                     else
                     {
-                        responseString = response.ReasonPhrase;
+                        cellValue = response.ReasonPhrase;
                     }
                 }
             }
             catch (Exception e)
             {
-                responseString = e.Message;
+                cellValue = e.Message;
 
             }
 
             // Async functions must use   ExcelAsyncUtil.QueueAsMacro(() => { })   when doing operations on Excel
             ExcelAsyncUtil.QueueAsMacro( () => 
             { 
-                excelApp.ActiveCell.Value2 = responseString; 
+                excelApp.ActiveCell.Value2 = cellValue; 
             });
         }
         public async Task OnRecommendActivityBtnPressed(IRibbonControl control)
