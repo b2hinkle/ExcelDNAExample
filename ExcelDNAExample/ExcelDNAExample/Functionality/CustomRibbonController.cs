@@ -117,9 +117,7 @@ namespace ExcelDNAExample
 
 
         /* 
-         * This api call returns nested arrays which prevents us from neatly displaying the data across multible cells as key value pairs (2 collumns, x amount of rows).
-         * In a production environment, we won't be calling apis that return nested data, so I just put it all in 1 cell (the selected one).
-         * The pourpose of this function is just to demonstrate how to do a post authentication api call. For an example on filling in cells neatly with api data see OnRecommendActivityBtnPressed()
+         * Authentication Post call example. This call returns nested data which is not the kind of data we would use in the final add-in, so I just put it all in 1 cell (the selected one) instaed of calling our WriteDictionaryToSheet()
          * 
          * dummy username: ac7da12c-520e-2dd4-4365-d5f6346b9a23
          * dummy password: uIKoOq3LwLDY9E7pilsE
