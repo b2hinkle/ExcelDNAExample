@@ -9,6 +9,8 @@ namespace ExcelDNAExample
     {
         /*
          * This helper function neatly writes key-value pair (dictionary) data to the sheet in the form of 2 collumns with x amount of rows. The starting cell of the generated data is specified by the caller (generatedRangeTopLeftCell).
+         * 
+         * Use this function whenever you need to write data to the sheet
          */
         public static void WriteDictionaryToSheet(Dictionary<string, dynamic> dictionary, Range generatedRangeTopLeftCell, bool doNotOverwriteExistingData, Application excelApp)
         {
