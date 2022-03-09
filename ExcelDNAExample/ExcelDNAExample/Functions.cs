@@ -12,6 +12,18 @@ namespace ExcelDNAExample
 {
     internal static class Functions
     {
+        /*
+         * [ExcelFunction] [ExcelArgument] attributes are optional but provide nice information to the user using the functions
+         * "Description" and "Category" define what is shown in excel when viewing the functions
+         */
+
+
+
+
+
+        /*
+         * Most basic function
+         */
         [ExcelFunction(Description = "Custom cell functions", Category = "Custom cell Functions")]
         public static string SayHello([ExcelArgument(Description = "The name to say hi to")] string name)
         {
@@ -19,8 +31,10 @@ namespace ExcelDNAExample
         }
 
 
-
-
+        /*
+         * This function demonstrates basic GET api call
+         * Here is a cool api to test out: https://catfact.ninja/fact
+         */
         [ExcelFunction(Description = "Custom cell functions", Category = "Custom cell Functions")]
         public static async Task<string> AsyncExample(string uri)
         {

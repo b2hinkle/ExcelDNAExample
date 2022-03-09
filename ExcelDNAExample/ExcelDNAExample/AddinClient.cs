@@ -9,13 +9,15 @@ using System.Net.Http.Headers;
 
 /*
  * Class for reusing HttpClient.
- * ApplicationEvents.AutoClose() calls the HttpClient's Dispose() currently
+ * ApplicationEvents.AutoClose() calls the HttpClient's Dispose()
+ * 
+ * HttpClient should be reused throughout the application and not instantiated multiple times. This is this class' purpose
  */
 namespace ExcelDNAExample
 {
     static internal class AddinClient
     {
-        private static readonly HttpClient httpClient;
+        private static readonly HttpClient httpClient;  // Use this for calling on endpoints
         static AddinClient()
         {
             // Create reusable static HttpClient that 
@@ -25,10 +27,10 @@ namespace ExcelDNAExample
 
             // https://makolyte.com/csharp-configuring-how-long-an-httpclient-connection-will-stay-open/ was a useful reference for static HttpClients
             ServicePointManager.MaxServicePointIdleTime = (int)TimeSpan.FromMinutes(1).TotalMilliseconds;
-            ServicePointManager.DnsRefreshTimeout = (int)TimeSpan.FromMinutes(1).TotalMilliseconds;     // not equivalent to ConnectionLeaseTimeout, but still could be nice
+            ServicePointManager.DnsRefreshTimeout = (int)TimeSpan.FromMinutes(1).TotalMilliseconds;     // not equivalent to ConnectionLeaseTimeout, but still nice
 
 #if false
-            // For setting at service point level instead
+            // Example for setting at service point level instead
             ServicePoint servicePoint = ServicePointManager.FindServicePoint(new Uri("https://localhost:9000"));
             servicePoint.MaxIdleTime = (int)TimeSpan.FromMinutes(1).TotalMilliseconds;
             servicePoint.ConnectionLeaseTimeout = (int)TimeSpan.FromMinutes(1).TotalMilliseconds;
