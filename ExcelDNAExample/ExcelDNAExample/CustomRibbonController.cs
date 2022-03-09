@@ -10,6 +10,7 @@ using System.Threading.Tasks;
 using ExcelDna.Integration;
 using System.Collections.Generic;
 using Newtonsoft.Json;
+using System.Text;
 
 namespace ExcelDNAExample
 {
@@ -125,8 +126,8 @@ namespace ExcelDNAExample
 
 #if false
             // An endpoint may require the username and password to be in the header (instead of the url). In that case put it in the Authorization header
-            byte[] authToken = Encoding.ASCII.GetBytes($"{userName}:{password}");
-            client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Basic", Convert.ToBase64String(authToken));
+            byte[] authorization = Encoding.ASCII.GetBytes($"{userId}:{authToken}");
+            AddinClient.GetHttpClient().DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Basic", Convert.ToBase64String(authorization));
 #endif
             string responseString = "---";
             try
