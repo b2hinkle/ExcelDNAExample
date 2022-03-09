@@ -2,7 +2,7 @@
 Example Excel DNA add-in for reference\
 Demonstrates some useful/common functionality for Excel DNA add-ins (ie. multithreaded function callbacks, returning to main thread for COM object model operations, custom cell functions, custom UI)
 
-# Notes for building and running:\
+# Notes for building and running:
 Under the "Debug" section in your ExcelDNAExample project settings......
 * Set your "Start external program" path to\
 **C:\Program Files\Microsoft Office\root\Office16\EXCEL.EXE**
