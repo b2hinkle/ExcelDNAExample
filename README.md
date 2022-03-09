@@ -7,5 +7,5 @@ Notes for building and running:
 * Set your "Start external program" path to\
 **C:\Program Files\Microsoft Office\root\Office16\EXCEL.EXE**
 * Set your "Command line arguments" to\
-**/x "ExcelDNAExample-AddIn64.xll"**
+**/x "ExcelDNAExample-AddIn64.xll"**\
 This makes VS run Excel with your plugin when you press play.
